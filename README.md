@@ -4,7 +4,7 @@
 
 ### Decision-tree playbooks that turn a SIEM alert into a confident verdict in minutes
 
-**23 playbooks · Mermaid decision trees · copy-paste UDM queries · linked to 237 detection rules**
+**23 playbooks · Mermaid decision trees · copy-paste UDM queries · linked to 298 detection rules**
 
 [![Validate](https://github.com/rizwancyberlock-svg/soc-triage-playbooks/actions/workflows/validate.yml/badge.svg)](https://github.com/rizwancyberlock-svg/soc-triage-playbooks/actions/workflows/validate.yml)
 ![Playbooks](https://img.shields.io/badge/playbooks-23-blue)
@@ -77,7 +77,8 @@ python tools/check_playbooks.py playbooks --index playbooks/INDEX.md \
 
 | Repo | Role |
 |---|---|
-| [open-yaral-detections](https://github.com/rizwancyberlock-svg/open-yaral-detections) | Detect: 237 YARA-L rules |
+| [open-yaral-detections](https://github.com/rizwancyberlock-svg/open-yaral-detections) | Detect in Google SecOps: 298 YARA-L rules |
+| [sentinel-kql-detections](https://github.com/rizwancyberlock-svg/sentinel-kql-detections) | Detect in Microsoft Sentinel: 191 KQL rules |
 | **soc-triage-playbooks** (you are here) | Investigate & respond |
 | [rosetta-siem](https://github.com/rizwancyberlock-svg/rosetta-siem) | Translate between SIEM query languages |
 
