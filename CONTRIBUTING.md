@@ -7,7 +7,7 @@ New playbooks, better decision trees and real-world false-positive tips are all 
    - `id`: `PB-<AREA>-<NNN>`, where AREA is `IDN`, `END`, `CLD`, `NET` or `DAT`
    - `severity`: `LOW`, `MEDIUM`, `HIGH` or `CRITICAL`
    - `mitre`: technique IDs
-   - `related_rules`: rule names from [open-yaral-detections](https://github.com/<your-username>/open-yaral-detections)
+   - `related_rules`: rule names from [open-yaral-detections](https://github.com/rizwancyberlock-svg/open-yaral-detections)
 3. Keep all required sections. The decision tree must be a Mermaid `flowchart`.
 4. Write queries that analysts can paste directly, using `<PLACEHOLDERS>` for values.
 5. Validate and regenerate the index:

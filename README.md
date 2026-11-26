@@ -6,7 +6,7 @@
 
 **23 playbooks · Mermaid decision trees · copy-paste UDM queries · linked to 237 detection rules**
 
-[![Validate](https://github.com/<your-username>/soc-triage-playbooks/actions/workflows/validate.yml/badge.svg)](https://github.com/<your-username>/soc-triage-playbooks/actions/workflows/validate.yml)
+[![Validate](https://github.com/rizwancyberlock-svg/soc-triage-playbooks/actions/workflows/validate.yml/badge.svg)](https://github.com/rizwancyberlock-svg/soc-triage-playbooks/actions/workflows/validate.yml)
 ![Playbooks](https://img.shields.io/badge/playbooks-23-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
@@ -29,7 +29,7 @@ Each playbook here answers, for one alert family:
 4. **How do I tell real from noise?** True-positive vs false-positive indicators.
 5. **What do I do now?** Containment steps, escalation criteria and evidence to collect.
 
-Every playbook links to the matching rules in **[open-yaral-detections](https://github.com/<your-username>/open-yaral-detections)**, and the link is verified by CI.
+Every playbook links to the matching rules in **[open-yaral-detections](https://github.com/rizwancyberlock-svg/open-yaral-detections)**, and the link is verified by CI.
 
 ## Playbooks
 
@@ -64,7 +64,7 @@ flowchart TD
 
 ## Using with other SIEMs
 
-The queries use Google SecOps UDM syntax, but the decision logic works in any SIEM. You can translate the queries with **[rosetta-siem](https://github.com/<your-username>/rosetta-siem)** (YARA-L ↔ KQL ↔ SPL ↔ AQL).
+The queries use Google SecOps UDM syntax, but the decision logic works in any SIEM. You can translate the queries with **[rosetta-siem](https://github.com/rizwancyberlock-svg/rosetta-siem)** (YARA-L ↔ KQL ↔ SPL ↔ AQL).
 
 ## Validate locally
 
@@ -77,9 +77,9 @@ python tools/check_playbooks.py playbooks --index playbooks/INDEX.md \
 
 | Repo | Role |
 |---|---|
-| [open-yaral-detections](https://github.com/<your-username>/open-yaral-detections) | Detect: 237 YARA-L rules |
+| [open-yaral-detections](https://github.com/rizwancyberlock-svg/open-yaral-detections) | Detect: 237 YARA-L rules |
 | **soc-triage-playbooks** (you are here) | Investigate & respond |
-| [rosetta-siem](https://github.com/<your-username>/rosetta-siem) | Translate between SIEM query languages |
+| [rosetta-siem](https://github.com/rizwancyberlock-svg/rosetta-siem) | Translate between SIEM query languages |
 
 ## Author
 

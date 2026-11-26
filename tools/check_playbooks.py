@@ -27,7 +27,7 @@ REQUIRED_HEADINGS = [
 ]
 SEVERITIES = {"LOW", "MEDIUM", "HIGH", "CRITICAL"}
 ID_RE = re.compile(r"^PB-[A-Z]{3}-\d{3}$")
-GALLERY = "https://<your-username>.github.io/open-yaral-detections/#q="
+GALLERY = "https://rizwancyberlock-svg.github.io/open-yaral-detections/#q="
 
 
 def front_matter(text: str) -> dict[str, str] | None:
