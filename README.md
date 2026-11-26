@@ -77,6 +77,7 @@ python tools/check_playbooks.py playbooks --index playbooks/INDEX.md \
 
 | Repo | Role |
 |---|---|
+| [siem-onboarding-kit](https://github.com/rizwancyberlock-svg/siem-onboarding-kit) | Onboard the log sources the playbooks pivot on |
 | [open-yaral-detections](https://github.com/rizwancyberlock-svg/open-yaral-detections) | Detect in Google SecOps: 298 YARA-L rules |
 | [sentinel-kql-detections](https://github.com/rizwancyberlock-svg/sentinel-kql-detections) | Detect in Microsoft Sentinel: 191 KQL rules |
 | **soc-triage-playbooks** (you are here) | Investigate & respond |
