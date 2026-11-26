@@ -1,0 +1,34 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out the detection library (for related_rules cross-check)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/open-yaral-detections
+          path: open-yaral-detections
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate playbooks and regenerate index
+        run: |
+          python tools/check_playbooks.py playbooks \
+            --index playbooks/INDEX.md \
+            --rules-dir open-yaral-detections/rules
+
+      - name: Fail if index is stale
+        run: git diff --exit-code -- playbooks/INDEX.md
