@@ -4,6 +4,7 @@ title: Brute Force Followed by Successful Login
 severity: CRITICAL
 mitre: T1110.001, T1078
 related_rules: auth_bruteforce_then_success, win_rdp_bruteforce, lnx_ssh_bruteforce, aws_console_login_failures
+related_kql: entra-bruteforce-then-success, entra-bruteforce-single-account, rdp-bruteforce
 ---
 
 # Brute Force Followed by Successful Login
@@ -13,6 +14,9 @@ related_rules: auth_bruteforce_then_success, win_rdp_bruteforce, lnx_ssh_brutefo
 ## When this fires
 - `auth_bruteforce_then_success` - 10+ failures then success within 1h
 - `win_rdp_bruteforce`, `lnx_ssh_bruteforce` - host-level brute force (check for a later success)
+- `entra-bruteforce-then-success` (Sentinel): 10+ failures for one account followed by a success for the same account within an hour
+- `entra-bruteforce-single-account` (Sentinel): 10 or more failed password attempts against one account within 10 minutes
+- `rdp-bruteforce` (Sentinel): 20+ failed logons (4625) from one source to one host in 15 minutes
 
 ## Triage decision tree
 ```mermaid

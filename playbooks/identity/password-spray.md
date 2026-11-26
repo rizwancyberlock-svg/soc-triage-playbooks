@@ -4,6 +4,7 @@ title: Password Spray
 severity: HIGH
 mitre: T1110.003, T1078
 related_rules: auth_password_spray_single_source, auth_spray_then_success, win_account_lockout_burst
+related_kql: entra-password-spray, entra-spray-followed-by-success, entra-smart-lockout-burst
 ---
 
 # Password Spray
@@ -14,6 +15,9 @@ related_rules: auth_password_spray_single_source, auth_spray_then_success, win_a
 - `auth_password_spray_single_source` - one IP failing against 15+ accounts in 30 min
 - `auth_spray_then_success` - same, followed by a **successful** login (treat as CRITICAL)
 - `win_account_lockout_burst` - 5+ AD lockouts in 15 min
+- `entra-password-spray` (Sentinel): One IP address fails Entra ID sign-in against 15 or more different accounts inside 30 minutes, using invalid-password error codes
+- `entra-spray-followed-by-success` (Sentinel): An IP that failed against 10+ accounts then produces a hit within the next hour: a successful sign- in, or a correct password that was only stopped by password…
+- `entra-smart-lockout-burst` (Sentinel): Entra smart lockout (50053) fired for 5+ different accounts within 30 minutes
 
 ## Triage decision tree
 ```mermaid

@@ -4,6 +4,7 @@ title: Illicit OAuth Consent / App Credential Backdoor
 severity: HIGH
 mitre: T1528, T1098.001
 related_rules: entra_app_consent_granted, entra_sp_credentials_added
+related_kql: entra-risky-oauth-consent, oauth-app-mass-access
 ---
 
 # Illicit OAuth Consent / App Credential Backdoor
@@ -13,6 +14,8 @@ related_rules: entra_app_consent_granted, entra_sp_credentials_added
 ## When this fires
 - `entra_app_consent_granted` - a user/admin consented to an application
 - `entra_sp_credentials_added` - new secret/certificate on a service principal
+- `entra-risky-oauth-consent` (Sentinel): A user or admin consented to an application that requested mailbox, file or directory-wide permissions
+- `oauth-app-mass-access` (Sentinel): A single OAuth application (by application id) accesses data on behalf of 10+ different users within an hour
 
 ## Triage decision tree
 ```mermaid
@@ -29,6 +32,14 @@ flowchart TD
 2. List the permissions granted and whether consent was user or admin.
 3. For new credentials: who added it, and has the service principal signed in from new IPs since?
 4. Check the app's sign-in and Graph activity logs for mailbox/file access.
+
+## True vs false positive
+
+| Points to attack | Points to benign |
+|---|---|
+| App requests Mail.Read / Files.ReadWrite.All / offline_access, unverified publisher | Verified publisher app used across the industry |
+| Consent right after a phishing email with a consent link | IT-approved app in the admin consent workflow |
+| App starts mass mailbox or file access | Low-scope app (User.Read) for SSO only |
 
 ## Containment & response
 - Revoke the OAuth grant and disable the service principal.

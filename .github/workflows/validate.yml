@@ -14,21 +14,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check out the detection library (for related_rules cross-check)
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/open-yaral-detections
-          path: open-yaral-detections
+      - name: Check out the detection libraries (for rule cross-checks)
+        run: |
+          git clone --depth 1 https://github.com/${{ github.repository_owner }}/open-yaral-detections.git
+          git clone --depth 1 https://github.com/${{ github.repository_owner }}/sentinel-kql-detections.git
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Validate playbooks and regenerate index
+      - name: Validate playbooks, links and linked rules; regenerate index
         run: |
           python tools/check_playbooks.py playbooks \
             --index playbooks/INDEX.md \
-            --rules-dir open-yaral-detections/rules
+            --rules-dir open-yaral-detections/rules \
+            --kql-dir sentinel-kql-detections/detections
+          git diff --exit-code -- playbooks/INDEX.md || { echo "::error::playbooks/INDEX.md is stale - run tools/check_playbooks.py and commit"; exit 1; }
 
-      - name: Fail if index is stale
-        run: git diff --exit-code -- playbooks/INDEX.md
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Compile every playbook KQL query with Microsoft's Sentinel analyzer
+        run: |
+          bash tools/kql-validator/fetch-schemas.sh
+          python tools/export_kql.py playbooks .kql-snippets
+          dotnet run --project tools/kql-validator -c Release -- .kql-snippets .schemas/azure-sentinel/.script/tests/KqlvalidationsTests
+
+      - name: Build the SOC IR Field Guide (fails if any decision tree does not render)
+        run: |
+          python tools/build_field_guide.py --out field-guide/SOC-IR-Field-Guide.html --pdf field-guide/SOC-IR-Field-Guide.pdf
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: soc-ir-field-guide
+          path: field-guide/SOC-IR-Field-Guide.pdf

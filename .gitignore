@@ -3,3 +3,10 @@ __pycache__/
 .DS_Store
 Thumbs.db
 open-yaral-detections/
+.schemas/
+tools/kql-validator/.packages/
+tools/kql-validator/bin/
+tools/kql-validator/obj/
+.kql-snippets/
+sentinel-kql-detections/
+field-guide/

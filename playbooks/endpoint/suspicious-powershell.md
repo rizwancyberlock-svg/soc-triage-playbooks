@@ -4,6 +4,7 @@ title: Suspicious PowerShell Execution
 severity: HIGH
 mitre: T1059.001, T1562.001, T1105
 related_rules: win_powershell_encoded_command, win_powershell_download_cradle, win_powershell_amsi_bypass, win_powershell_suspicious_flags, win_defender_tampering_powershell
+related_kql: encoded-powershell, powershell-scriptblock-suspicious, obfuscated-command-line
 ---
 
 # Suspicious PowerShell Execution
@@ -12,6 +13,9 @@ related_rules: win_powershell_encoded_command, win_powershell_download_cradle, w
 
 ## When this fires
 Any rule in `related_rules`. Severity rises when several fire on the same host within minutes.
+- `encoded-powershell` (Sentinel): Process creation (4688) of powershell.exe / pwsh.exe with -EncodedCommand (or any abbreviation such as -enc or -e) followed by a Base64 blob
+- `powershell-scriptblock-suspicious` (Sentinel): PowerShell Script Block Logging (event 4104, Microsoft-Windows-PowerShell/Operational) shows download cradles, AMSI bypass or credential-theft keywords
+- `obfuscated-command-line` (Sentinel): Command lines showing classic obfuscation: caret/quote insertion in cmd, string reversal, char-code concatenation, Invoke-Obfuscation tokens, -join of character…
 
 ## Triage decision tree
 ```mermaid

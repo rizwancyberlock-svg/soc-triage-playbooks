@@ -4,6 +4,7 @@ title: Privileged Role or Group Assignment
 severity: HIGH
 mitre: T1098.003, T1098.007
 related_rules: entra_directory_role_assigned, win_privileged_group_member_added, win_local_admin_added_cmd, azure_role_assignment_created, aws_iam_policy_attached, gcp_iam_policy_changed
+related_kql: entra-global-admin-assigned, privileged-group-member-added, new-account-added-to-privileged-group, azure-role-assignment-created
 ---
 
 # Privileged Role or Group Assignment
@@ -12,6 +13,10 @@ related_rules: entra_directory_role_assigned, win_privileged_group_member_added,
 
 ## When this fires
 Any rule in `related_rules` - AD privileged groups, Entra directory roles, Azure RBAC, AWS IAM policies, GCP IAM.
+- `entra-global-admin-assigned` (Sentinel): A user or service principal was added to a high-privilege directory role such as Global Administrator or Privileged Role Administrator
+- `privileged-group-member-added` (Sentinel): Someone was added to Domain Admins, Enterprise Admins, Administrators or another highly privileged group (events 4728, 4732, 4756)
+- `new-account-added-to-privileged-group` (Sentinel): An account is created (4720) and added to Domain Admins / Administrators / another privileged group within an hour
+- `azure-role-assignment-created` (Sentinel): A new Azure RBAC role assignment
 
 ## Triage decision tree
 ```mermaid
@@ -33,6 +38,14 @@ flowchart TD
    ```
    principal.user.userid = "<TARGET_USER>"
    ```
+
+## True vs false positive
+
+| Points to attack | Points to benign |
+|---|---|
+| Permanent assignment outside PIM, or to a new account | PIM-eligible assignment with approval |
+| Assigned by an admin whose own session is risky | Access review or onboarding ticket matches the change |
+| Account added to Domain Admins and removed hours later | Break-glass test documented in advance |
 
 ## Containment & response
 - Remove the assignment if unapproved (keep evidence first).

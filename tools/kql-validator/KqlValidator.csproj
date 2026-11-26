@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- The KustoServices package targets an older framework; keep build output quiet -->
+    <NoWarn>NU1701;NU1603</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Microsoft's Sentinel KQL analyzer (same package Azure/Azure-Sentinel uses in its CI).
+         It is restored from a local folder: see tools/validator/README.md. -->
+    <PackageReference Include="Microsoft.Azure.Sentinel.KustoServices" Version="7.1.0" />
+    <PackageReference Include="YamlDotNet" Version="16.1.3" />
+  </ItemGroup>
+
+</Project>
