@@ -12,7 +12,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
 
-[📘 Download the SOC IR Field Guide (PDF)](https://github.com/rizwancyberlock-svg/soc-triage-playbooks/releases/latest) · [Playbook index](playbooks/INDEX.md) · [Triage method](framework/triage-method.md) · [IR lifecycle](framework/incident-response-lifecycle.md) · [Contribute](CONTRIBUTING.md)
+[🌐 Read the field guide online](https://rizwancyberlock-svg.github.io/soc-triage-playbooks/) · [📘 Download the PDF](https://github.com/rizwancyberlock-svg/soc-triage-playbooks/releases/latest) · [Contents](playbooks/INDEX.md) · [Triage method](framework/triage-method.md) · [IR lifecycle](framework/incident-response-lifecycle.md) · [Contribute](CONTRIBUTING.md)
 
 </div>
 
@@ -34,10 +34,10 @@ Each playbook here answers, for one alert family:
 
 All 60 playbooks and the SOC framework in one printable, linked PDF: a cover, a clickable contents page, a page per playbook with its rendered decision tree, and an ATT&CK technique index.
 
-➡️ **[Download it from the latest release](https://github.com/rizwancyberlock-svg/soc-triage-playbooks/releases/latest)**, or build it yourself:
+➡️ **[Read it online](https://rizwancyberlock-svg.github.io/soc-triage-playbooks/)**, **[download the PDF](https://github.com/rizwancyberlock-svg/soc-triage-playbooks/releases/latest)**, or build it yourself:
 
 ```bash
-python tools/build_field_guide.py --out field-guide/SOC-IR-Field-Guide.html --pdf field-guide/SOC-IR-Field-Guide.pdf
+python tools/build_field_guide.py --out field-guide/index.html --pdf field-guide/SOC-IR-Field-Guide.pdf
 ```
 
 ## Playbooks

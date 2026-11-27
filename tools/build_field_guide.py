@@ -3,8 +3,8 @@
 build_field_guide - render the framework and every playbook into a printable "SOC IR Field Guide".
 
 Usage:
-    python tools/build_field_guide.py --out field-guide/SOC-IR-Field-Guide.html
-    python tools/build_field_guide.py --out field-guide/SOC-IR-Field-Guide.html --pdf field-guide/SOC-IR-Field-Guide.pdf
+    python tools/build_field_guide.py --out field-guide/index.html
+    python tools/build_field_guide.py --out field-guide/index.html --pdf field-guide/SOC-IR-Field-Guide.pdf
 
 The PDF step uses headless Chrome / Chromium (found automatically, or pass --chrome). Mermaid decision
 trees are rendered in the browser, and the build fails if any diagram does not render.
@@ -312,13 +312,15 @@ def build(version: str) -> str:
   <tr><td>Log-source onboarding</td><td><a href="https://github.com/rizwancyberlock-svg/siem-onboarding-kit">github.com/rizwancyberlock-svg/siem-onboarding-kit</a></td></tr>
   <tr><td>Author</td><td>Rizwan Ahmed · <a href="https://www.linkedin.com/in/rizwan-ahmed-cdc/">linkedin.com/in/rizwan-ahmed-cdc</a></td></tr>
   </tbody></table>
-  <p class="note">Licensed under the MIT License. Product names are trademarks of their respective owners. Built {dt.date.today().isoformat()}.</p>
+  <p class="note">Licensed under the MIT License. Product names are trademarks of their respective owners.</p>
 </section>""")
     return TEMPLATE.replace("{{BODY}}", "\n".join(parts)).replace("{{MERMAID}}", MERMAID).replace("{{VERSION}}", version)
 
 
 TEMPLATE = r"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="SOC IR Field Guide by Rizwan Ahmed: 60 decision-tree playbooks for Google SecOps and Microsoft Sentinel.">
 <title>SOC IR Field Guide - Rizwan Ahmed</title>
 <style>
 @page { size: A4; margin: 16mm 15mm 18mm 15mm;
@@ -371,9 +373,26 @@ ul, ol { margin: 3pt 0 6pt; padding-left: 16pt; } li { margin: 2pt 0; }
 .back { text-align: right; font-size: 8pt; margin-top: 6pt; }
 .note { font-size: 8.5pt; color: var(--muted); border-top: 1px solid var(--line); padding-top: 6pt; }
 .fw h2 { color: var(--ink); }
+.topbar { display: none; }
+@media screen {
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  body { background: #e8edf4; font-size: 15px; }
+  section.page, section.divider, section.cover { max-width: 210mm; margin: 22px auto; background: #fff; padding: 15mm 15mm 12mm;
+    border-radius: 10px; box-shadow: 0 2px 14px rgba(19,32,51,.10); }
+  section.cover { min-height: 250mm; height: auto; margin-top: 76px; background: linear-gradient(160deg, #0b1f3a 0%, #0b62c4 140%); }
+  section.divider { height: auto; min-height: 90mm; border-left: 8px solid var(--accent); }
+  .topbar { display: flex; position: fixed; top: 0; left: 0; right: 0; z-index: 10; gap: 18px; align-items: center; padding: 12px 22px;
+    background: #0b1f3a; color: #fff; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
+  .topbar b { margin-right: auto; } .topbar a { color: #8cc4ff; }
+  @media (max-width: 820px) { section.page, section.divider, section.cover { margin: 12px 8px; padding: 18px 16px; }
+    section.cover { margin-top: 64px; min-height: 0; padding: 40px 20px; } .cover .stats { flex-wrap: wrap; } .cover .stats div { min-width: 40%; }
+    table { display: block; overflow-x: auto; } .tree { overflow-x: auto; } .pb-head h2 { font-size: 22px; } .cover h1 { font-size: 40px; } .topbar a.hide-sm { display: none; } }
+}
 </style>
 <script src="{{MERMAID}}"></script>
 </head><body>
+<nav class="topbar"><b>🧭 SOC IR Field Guide</b><a href="#contents">Contents</a><a class="hide-sm" href="#attack-index">ATT&amp;CK index</a>
+<a href="https://github.com/rizwancyberlock-svg/soc-triage-playbooks/releases/latest">⬇ PDF</a><a class="hide-sm" href="https://github.com/rizwancyberlock-svg/soc-triage-playbooks">GitHub</a></nav>
 {{BODY}}
 <script>
   mermaid.initialize({ startOnLoad: false, theme: "neutral", securityLevel: "strict",
