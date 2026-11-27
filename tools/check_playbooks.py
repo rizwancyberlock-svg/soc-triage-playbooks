@@ -19,7 +19,7 @@ import re
 import sys
 from pathlib import Path
 
-REQUIRED_KEYS = ["id", "title", "severity", "mitre", "related_rules"]
+REQUIRED_KEYS = ["id", "title", "severity", "mitre"]
 REQUIRED_HEADINGS = [
     "## When this fires",
     "## Triage decision tree",
@@ -34,7 +34,7 @@ GENERATED = {"INDEX.md", "RULE-MAP.md"}
 SEV_COLOR = {"CRITICAL": "b42318", "HIGH": "d9480f", "MEDIUM": "b7791f", "LOW": "2f855a"}
 FRAMEWORK = ["triage-method.md", "severity-matrix.md", "escalation-and-handover.md", "incident-response-lifecycle.md"]
 AREAS = [("identity", "🔑 Identity"), ("email", "📧 Email"), ("saas", "🗂️ SaaS & Microsoft 365 data"), ("endpoint", "💻 Endpoint"),
-         ("cloud", "☁️ Cloud"), ("network", "🌐 Network & edge"), ("data", "🗄️ Data security")]
+         ("cloud", "☁️ Cloud"), ("ai", "🤖 AI & agents"), ("network", "🌐 Network & edge"), ("data", "🗄️ Data security")]
 ID_RE = re.compile(r"^PB-[A-Z]{3}-\d{3}$")
 GALLERY = "https://rizwancyberlock-svg.github.io/open-yaral-detections/#q="
 KQL_REPO = "https://github.com/rizwancyberlock-svg/sentinel-kql-detections/blob/main/detections/"
@@ -108,6 +108,10 @@ def main() -> int:
         for target, _ in LINK_RE.findall(text):
             if not target.startswith("http") and not (path.parent / target).resolve().exists():
                 errors.append(f"{rel}: broken link to {target}")
+        if not rules and not kql and meta.get("trigger") != "hunt":
+            errors.append(f"{rel}: needs related_rules / related_kql, or 'trigger: hunt' for a hunt-driven playbook")
+        if meta.get("trigger") == "hunt" and "```kql" not in text:
+            errors.append(f"{rel}: hunt-driven playbooks must include at least one KQL hunting query")
         entries.append((path, meta, rules, kql))
 
     for e in errors:
@@ -145,7 +149,8 @@ def main() -> int:
                 link = path.relative_to(args.index.parent).as_posix()
                 sev = meta.get("severity", "")
                 badge = f"![{sev}](https://img.shields.io/badge/-{sev}-{SEV_COLOR.get(sev, '555555')}?style=flat-square)"
-                lines.append(f"- `{meta.get('id')}` [{meta.get('title')}]({link}) {badge}")
+                hunt = " 🔎 *hunt*" if meta.get("trigger") == "hunt" else ""
+                lines.append(f"- `{meta.get('id')}` [{meta.get('title')}]({link}) {badge}{hunt}")
             lines.append("")
         lines += [
             "## Detection mapping",
@@ -167,7 +172,7 @@ def main() -> int:
         for path, meta, rules, kql in sorted(entries, key=lambda e: e[1].get("id", "")):
             link = path.relative_to(args.index.parent).as_posix()
             area = path.parent.name
-            rule_links = ", ".join(f"[`{r}`]({GALLERY}{r})" for r in rules)
+            rule_links = ", ".join(f"[`{r}`]({GALLERY}{r})" for r in rules) or ("hunt-driven" if meta.get("trigger") == "hunt" else "-")
             kql_links = ", ".join(f"[`{r}`]({KQL_REPO}{known_kql[r]})" if known_kql else f"`{r}`" for r in kql) or "-"
             lines.append(
                 f"| {meta.get('id')} | [{meta.get('title')}]({link}) | {area} | {meta.get('severity')} | "

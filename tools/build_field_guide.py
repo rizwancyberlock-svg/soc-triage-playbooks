@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parent.parent
 MERMAID = "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"
 AREAS = [
     ("identity", "Identity", "🔑"), ("email", "Email", "📧"), ("saas", "SaaS & Microsoft 365 data", "🗂️"),
-    ("endpoint", "Endpoint", "💻"), ("cloud", "Cloud", "☁️"), ("network", "Network & edge", "🌐"),
+    ("endpoint", "Endpoint", "💻"), ("cloud", "Cloud", "☁️"), ("ai", "AI & agents", "🤖"), ("network", "Network & edge", "🌐"),
     ("data", "Data security", "🗄️"),
 ]
 FRAMEWORK = ["triage-method.md", "severity-matrix.md", "escalation-and-handover.md", "incident-response-lifecycle.md"]
@@ -283,6 +283,8 @@ def build(version: str) -> str:
             area_anchor = f' id="area-{key}"' if first else ""
             first = False
             tags = "".join(f'<span class="tech">{html.escape(t.strip())}</span>' for t in m.get("mitre", "").split(","))
+            if m.get("trigger") == "hunt":
+                tags += '<span class="tech hunt">HUNT-DRIVEN</span>'
             parts.append(f"""
 <section class="page playbook"{area_anchor}>
   <div class="pb-head" id="{anchors[p]}">
@@ -353,6 +355,7 @@ html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .pid { font-family: Consolas, monospace; font-size: 8.5pt; color: var(--muted); }
 .sev { display: inline-block; font-size: 7.5pt; font-weight: 700; padding: 1pt 6pt; border-radius: 8pt; color: #fff; vertical-align: middle; }
 .sev.critical { background: #b42318; } .sev.high { background: #d9480f; } .sev.medium { background: #b7791f; } .sev.low { background: #2f855a; }
+.tech.hunt { background: #fff4e5; border-color: #f0b35b; color: #8a4b00; font-weight: 700; }
 .tech { display: inline-block; font: 7.5pt Consolas, monospace; background: var(--soft); border: 1px solid var(--line); border-radius: 6pt; padding: 1pt 5pt; margin-left: 4pt; }
 .pb-head { border-bottom: 2pt solid var(--accent); padding-bottom: 6pt; margin-bottom: 8pt; }
 .pb-area { font-size: 8.5pt; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); font-weight: 700; }
