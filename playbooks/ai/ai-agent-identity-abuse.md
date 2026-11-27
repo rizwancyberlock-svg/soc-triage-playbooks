@@ -3,7 +3,9 @@ id: PB-AIS-003
 title: AI Agent / Non-Human Identity Abuse
 severity: HIGH
 mitre: T1078.004, T1098.003, AML.T0053
-trigger: hunt
+related_rules: entra_sp_signin_resource_fanout
+related_kql: service-principal-new-resource-or-ip
+trigger: rule+hunt
 ---
 
 # AI Agent / Non-Human Identity Abuse
@@ -11,7 +13,10 @@ trigger: hunt
 > AI agents (Copilot Studio agents, custom LangChain or MCP-based agents, coding agents) act through **service principals, API keys and OAuth grants**, often with broad permissions granted "to make it work". If the agent is manipulated (prompt injection), its tools are compromised (a malicious MCP server or plugin), or its credentials leak, the attacker gets an identity that **acts at machine speed and looks like automation**. Non-human identities already outnumber humans in most tenants.
 
 ## When this fires
-**Hunt-driven.** Look for agent identities doing things outside their declared purpose: new resources or APIs, unusual volume, new IPs, permission changes, and consent grants to agent apps.
+- `entra_sp_signin_resource_fanout` (SecOps): One service principal (automation, integration or AI agent) signed in to five or more different resources within an hour
+- `service-principal-new-resource-or-ip` (Sentinel): A service principal (including AI agents, automation and integrations) signed in successfully to a resource from an IP address it has not used with that resource in the previous 14 days
+
+**Also hunt** for agent identities acting outside their declared purpose: new resources or APIs, unusual volume, permission changes, and consent grants to agent apps.
 
 ## Triage decision tree
 ```mermaid

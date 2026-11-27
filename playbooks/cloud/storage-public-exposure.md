@@ -20,7 +20,7 @@ related_kql: aws-s3-public-or-policy-opened, azure-storage-public-access-enabled
 - `m365_mass_file_download` (SecOps): One user downloaded 300+ files from SharePoint / OneDrive within 30 minutes
 - `aws-s3-public-or-policy-opened` (Sentinel): Public access block deleted, or a bucket policy / ACL granting access to everyone (Principal '*' or AllUsers)
 - `azure-storage-public-access-enabled` (Sentinel): allowBlobPublicAccess enabled on a storage account, a container set to Blob/Container public access, or network rules opened to all networks
-- `azure-storage-anonymous-read` (Sentinel): Successful anonymous (unauthenticated) blob reads, aggregated by account and client IP
+- `azure-storage-anonymous-read` (Sentinel): Successful anonymous (unauthenticated) blob reads, aggregated by account and client IP. Confirms that data in a public container is actually being pulled - covers 'publicly exposed cloud buckets' with evidence rather than configuration only
 - `gcp-bucket-made-public` (Sentinel): Cloud Storage IAM changed to include allUsers or allAuthenticatedUsers - a public bucket
 
 ## Triage decision tree

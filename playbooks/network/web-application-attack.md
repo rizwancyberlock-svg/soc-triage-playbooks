@@ -23,7 +23,7 @@ related_kql: waf-attack-burst, web-exploit-patterns-in-url, waf-detection-mode-h
 - `fweb_high_severity_attack` (SecOps): FortiWeb attack log with high or critical severity from one source
 - `hd_waf_attack_spike` (SecOps): 50+ Haltdos WAF blocks for one source within 10 minutes
 - `waf-attack-burst` (Sentinel): 25+ WAF matches (SQL injection, XSS, LFI, RCE rule groups) from one client IP within 10 minutes on Azure Application Gateway
-- `web-exploit-patterns-in-url` (Sentinel): Proxy/WAF CEF logs (RequestURL) containing high-confidence exploit strings: JNDI lookups, directory traversal to sensitive files, cloud metadata SSRF and shell…
+- `web-exploit-patterns-in-url` (Sentinel): Proxy/WAF CEF logs (RequestURL) containing high-confidence exploit strings: JNDI lookups, directory traversal to sensitive files, cloud metadata SSRF and shell command injection
 - `waf-detection-mode-hits` (Sentinel): Application Gateway WAF rule matches with action 'Matched'/'Detected' rather than 'Blocked': the request reached your application
 
 ## Triage decision tree

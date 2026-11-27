@@ -4,6 +4,7 @@ title: eDiscovery / Content Search Abuse
 severity: HIGH
 mitre: T1114.002, T1213
 related_rules: m365_ediscovery_search
+related_kql: ediscovery-search-or-export
 ---
 
 # eDiscovery / Content Search Abuse
@@ -12,6 +13,7 @@ related_rules: m365_ediscovery_search
 
 ## When this fires
 - `m365_ediscovery_search`: `New-ComplianceSearch`, `Start-ComplianceSearch`, `New-ComplianceSearchAction -Export` / `SearchExported`, or an eDiscovery role assignment
+- `ediscovery-search-or-export` (Sentinel): Purview content search or eDiscovery activity: searches created or started, search actions (export, purge) and export downloads
 
 ## Triage decision tree
 ```mermaid
@@ -56,4 +58,3 @@ Any unapproved search or export → IR and legal.
 ## Evidence to collect
 Search definition and parameters, export and download records, role assignment history, and the actor's session.
 
-> Sentinel: this activity is in `OfficeActivity` (and `CloudAppEvents` with Defender for Cloud Apps). There is no dedicated KQL rule in the library yet, so use the query above as a hunt.

@@ -3,7 +3,9 @@ id: PB-SAS-006
 title: Source Code Exfiltration and Secret Exposure
 severity: HIGH
 mitre: T1213.003, T1552.001, T1567.001
-trigger: hunt
+related_rules: github_mass_repo_clone, github_sensitive_org_change
+related_kql: github-repo-exposure-or-mass-clone
+trigger: rule+hunt
 ---
 
 # Source Code Exfiltration and Secret Exposure
@@ -11,7 +13,11 @@ trigger: hunt
 > Source code repositories hold your intellectual property and, far too often, **hard-coded secrets**. Two scenarios matter: an attacker (or departing insider) cloning many repositories, and a secret pushed to a public repository, where bots harvest it **within minutes**. Rotating the secret matters more than deleting the commit.
 
 ## When this fires
-**Hunt-driven**, plus platform alerts: GitHub / GitLab / Azure DevOps audit events (repository visibility changed to public, mass clone, new deploy keys, PATs, org members), and secret-scanning or push-protection alerts.
+- `github_mass_repo_clone` (SecOps): One identity cloned or downloaded 25 or more different GitHub repositories within an hour - source code exfiltration by a stolen token or a departing insider
+- `github_sensitive_org_change` (SecOps): GitHub repository visibility changed, deploy key or personal access token created, organization member added, or secret scanning / push protection disabled - exposure and persistence paths for source code and secrets
+- `github-repo-exposure-or-mass-clone` (Sentinel): Through the Defender for Cloud Apps GitHub connector: a repository visibility change, new deploy keys, personal access tokens or organization members, secret-scanning disabled, or one account cloning / downloading 25+ repositories in an hour
+
+**Also hunt** with the query below, and route platform alerts here: GitLab / Azure DevOps audit events, and secret-scanning or push-protection alerts.
 
 ## Triage decision tree
 ```mermaid

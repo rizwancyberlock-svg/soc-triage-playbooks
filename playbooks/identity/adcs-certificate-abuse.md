@@ -3,7 +3,9 @@ id: PB-IDN-014
 title: AD CS Certificate Abuse (ESC1 / ESC8)
 severity: CRITICAL
 mitre: T1649, T1557.001
-trigger: hunt
+related_rules: win_adcs_certificate_with_san, win_adcs_template_or_ca_security_changed
+related_kql: adcs-certificate-request-with-san, adcs-template-or-ca-security-changed
+trigger: rule+hunt
 ---
 
 # AD CS Certificate Abuse (ESC1 / ESC8)
@@ -11,7 +13,12 @@ trigger: hunt
 > A misconfigured certificate template (ESC1: the requester can supply the subject) or NTLM relay to web enrollment (ESC8) lets a regular user obtain a certificate **as a Domain Admin or a domain controller**. The certificate keeps working after password resets, for its whole validity period. Few SOCs collect CA logs, so this is usually found by hunting.
 
 ## When this fires
-No dedicated rule in the libraries yet. This playbook is **hunt-driven**. Run the hunts below weekly, and immediately after any Certipy, Certify or PetitPotam indicator. It needs **CA auditing** (certsrv "Issue and manage certificate requests", events 4886/4887) and DC Kerberos events (4768).
+- `win_adcs_certificate_with_san` (SecOps): AD CS received or issued a certificate request carrying a requester-supplied SAN (SAN:, upn=, dns=) - the ESC1 pattern that lets a normal user obtain a certificate as a Domain Admin
+- `win_adcs_template_or_ca_security_changed` (SecOps): Certificate template or CA security settings changed (4882, 4890, 4899, 4900)
+- `adcs-certificate-request-with-san` (Sentinel): A certificate request that carried a Subject Alternative Name (SAN:, upn=, dns=) was received or issued by the CA. When the requester can choose the subject, a normal user can obtain a certificate as a Domain Admin or a domain controller, and that certificate keeps working after password resets
+- `adcs-template-or-ca-security-changed` (Sentinel): Certificate Services template or CA security changes (4899 template updated, 4900 template security updated, 4882 CA permissions changed, 4890 CA manager settings changed)
+
+**Also hunt** weekly with the queries below, and immediately after any Certipy, Certify or PetitPotam indicator. The rules need **CA auditing** (certsrv "Issue and manage certificate requests", events 4886/4887). The PKINIT hunt needs DC Kerberos events (4768).
 
 ## Triage decision tree
 ```mermaid

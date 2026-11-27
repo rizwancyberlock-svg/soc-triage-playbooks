@@ -12,7 +12,7 @@ related_kql: webserver-spawns-shell, webshell-file-written
 > A web server process launching `cmd`, `whoami` or `bash` means someone is executing commands through your application.
 
 ## When this fires
-- `win_webserver_spawns_shell` (SecOps): An IIS / Exchange / web server worker process spawned a shell or recon tool - the hallmark of a web shell or exploited web application (ProxyShell, ProxyLogon, file…
+- `win_webserver_spawns_shell` (SecOps): An IIS / Exchange / web server worker process spawned a shell or recon tool - the hallmark of a web shell or exploited web application (ProxyShell, ProxyLogon, file upload bugs)
 - `lnx_webserver_spawns_shell` (SecOps): Apache / nginx / PHP-FPM / Tomcat spawned a shell or recon tool - web shell or RCE exploitation
 - `web_webshell_access` (SecOps): Successful (HTTP 200) requests to common web shell names or command parameters (cmd.php, c99, r57, wso, b374k, ?cmd=)
 - `web_command_injection` (SecOps): OS command injection payloads in the URL (;id, |whoami, $(curl ...), backticks)

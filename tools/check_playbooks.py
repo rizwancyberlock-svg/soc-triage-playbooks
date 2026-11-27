@@ -108,10 +108,10 @@ def main() -> int:
         for target, _ in LINK_RE.findall(text):
             if not target.startswith("http") and not (path.parent / target).resolve().exists():
                 errors.append(f"{rel}: broken link to {target}")
-        if not rules and not kql and meta.get("trigger") != "hunt":
-            errors.append(f"{rel}: needs related_rules / related_kql, or 'trigger: hunt' for a hunt-driven playbook")
-        if meta.get("trigger") == "hunt" and "```kql" not in text:
-            errors.append(f"{rel}: hunt-driven playbooks must include at least one KQL hunting query")
+        if meta.get("trigger") != "hunt" and not (rules and kql):
+            errors.append(f"{rel}: needs detections in both libraries (related_rules + related_kql), or 'trigger: hunt'")
+        if "hunt" in meta.get("trigger", "") and "```kql" not in text:
+            errors.append(f"{rel}: playbooks with a hunt trigger must include at least one KQL hunting query")
         entries.append((path, meta, rules, kql))
 
     for e in errors:
@@ -149,7 +149,7 @@ def main() -> int:
                 link = path.relative_to(args.index.parent).as_posix()
                 sev = meta.get("severity", "")
                 badge = f"![{sev}](https://img.shields.io/badge/-{sev}-{SEV_COLOR.get(sev, '555555')}?style=flat-square)"
-                hunt = " 🔎 *hunt*" if meta.get("trigger") == "hunt" else ""
+                hunt = {"hunt": " 🔎 *hunt only*", "rule+hunt": " 🔎 *rule + hunt*"}.get(meta.get("trigger", ""), "")
                 lines.append(f"- `{meta.get('id')}` [{meta.get('title')}]({link}) {badge}{hunt}")
             lines.append("")
         lines += [

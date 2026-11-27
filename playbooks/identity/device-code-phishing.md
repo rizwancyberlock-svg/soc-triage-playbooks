@@ -3,7 +3,9 @@ id: PB-IDN-020
 title: Device Code Phishing
 severity: HIGH
 mitre: T1528, T1566.002
-trigger: hunt
+related_rules: entra_device_code_sign_in
+related_kql: entra-device-code-sign-in
+trigger: rule+hunt
 ---
 
 # Device Code Phishing
@@ -11,7 +13,10 @@ trigger: hunt
 > The attacker starts a legitimate Microsoft **device-code sign-in** and tricks the victim (via email, Teams or a fake meeting invite) into typing the code at `microsoft.com/devicelogin`. The victim completes real MFA, and **the attacker's device receives the tokens**. There is no fake page and no password theft. This has been used at scale by state-backed actors since 2024–2025.
 
 ## When this fires
-**Hunt-driven**: run daily, or as a scheduled analytic. Signal: sign-ins using the **device code flow** by users who never use it, especially when followed by Graph or Exchange access from a different IP than the user's.
+- `entra_device_code_sign_in` (SecOps): A user signed in with the OAuth device code flow - the flow abused by device code phishing, where the victim completes MFA and the attacker's device receives the tokens
+- `entra-device-code-sign-in` (Sentinel): A user completed a sign-in using the OAuth device code flow
+
+**Also hunt** daily: follow each device-code sign-in to the non-interactive token use that comes after it, especially Graph or Exchange access from a different IP than the user's.
 
 ## Triage decision tree
 ```mermaid

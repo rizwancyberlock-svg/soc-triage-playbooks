@@ -3,7 +3,9 @@ id: PB-NET-008
 title: Log Source Silence / Ingestion Gap
 severity: HIGH
 mitre: T1562.006, T1562.008, T1070
-trigger: hunt
+related_rules: win_audit_policy_tampering, azure_diagnostic_setting_deleted, aws_cloudtrail_tampering, gcp_logging_sink_tampering, lnx_auditd_tampering
+related_kql: log-source-silent
+trigger: rule+hunt
 ---
 
 # Log Source Silence / Ingestion Gap
@@ -11,7 +13,14 @@ trigger: hunt
 > Every detection in this guide assumes the logs are arriving. When a firewall stops sending syslog, a DC's agent breaks, a diagnostic setting is deleted or a connector token expires, **the SOC goes blind without a single alert**. Attackers cause this deliberately, and operations cause it by accident every week. In a SOC with 30–50 source types, monitoring for silence is a detection in its own right.
 
 ## When this fires
-**Hunt-driven.** Run it as a scheduled analytic every hour. Compare each source's last event time and volume with its baseline. Pair it with [log clearing](../endpoint/log-clearing-anti-forensics.md) and [cloud logging tampering](../cloud/cloud-logging-tampering.md).
+- `win_audit_policy_tampering` (SecOps): Windows audit policy cleared or auditing disabled (auditpol /clear, /remove or /set ... disable, or Security EID 4719), blinding the SIEM
+- `azure_diagnostic_setting_deleted` (SecOps): A diagnostic setting was deleted - stops logs flowing to the SIEM / Log Analytics
+- `aws_cloudtrail_tampering` (SecOps): CloudTrail logging stopped, a trail deleted or its event selectors changed - attackers cut audit visibility before acting
+- `gcp_logging_sink_tampering` (SecOps): A Cloud Logging sink or log bucket was deleted or modified, or a log exclusion was created
+- `lnx_auditd_tampering` (SecOps): auditd stopped, masked or its rules deleted, or audit logs removed - blinding Linux telemetry
+- `log-source-silent` (Sentinel): A firewall, server or appliance that sent events during the last 24 hours has sent nothing for 2 hours
+
+The SecOps rules above catch **deliberate** silencing. For silence of any cause in Google SecOps, alert on ingestion metrics (Cloud Monitoring, `chronicle.googleapis.com/ingestion` record counts per log type) or the built-in Data Ingestion & Health dashboard. **Also hunt** hourly with the queries below, and pair this playbook with [log clearing](../endpoint/log-clearing-anti-forensics.md) and [cloud logging tampering](../cloud/cloud-logging-tampering.md).
 
 ## Triage decision tree
 ```mermaid

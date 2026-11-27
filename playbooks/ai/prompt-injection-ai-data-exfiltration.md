@@ -3,7 +3,9 @@ id: PB-AIS-002
 title: Prompt Injection / AI Assistant Data Exfiltration
 severity: HIGH
 mitre: AML.T0051, AML.T0057, T1567
-trigger: hunt
+related_rules: mdc_ai_workload_threat_alert
+related_kql: ai-workload-threat-alert
+trigger: rule+hunt
 ---
 
 # Prompt Injection / AI Assistant Data Exfiltration
@@ -11,7 +13,10 @@ trigger: hunt
 > AI assistants (Microsoft 365 Copilot, enterprise chatbots, RAG apps) read email, documents and chats with **the user's permissions**. A crafted email or document can carry hidden instructions (indirect or cross-prompt injection) that make the assistant reveal or send out sensitive data. Users can also deliberately jailbreak internal AI apps. The AI is the attack path, and the data is the target. Mapped to MITRE ATLAS (AML.T0051 LLM Prompt Injection, AML.T0057 LLM Data Leakage).
 
 ## When this fires
-**Hunt-driven**, plus product alerts where you have them: Defender for Cloud AI threat protection (jailbreak, sensitive-data exposure and wallet-abuse alerts on Azure AI deployments), Prompt Shields / content-safety detections, and Purview DSPM for AI (risky AI usage and sensitive data in prompts).
+- `mdc_ai_workload_threat_alert` (SecOps): Defender for Cloud AI threat protection alert - jailbreak, prompt injection, credential theft or sensitive-data exposure on an AI deployment (MITRE ATLAS AML.T0051 / AML.T0057)
+- `ai-workload-threat-alert` (Sentinel): Defender for Cloud AI threat protection alerts (alert types starting 'AI.'), or alerts naming jailbreak, prompt injection, credential theft or sensitive-data exposure on Azure AI deployments
+
+**Also hunt** with the queries below. Other useful signals: Prompt Shields / content-safety detections, and Purview DSPM for AI (risky AI usage and sensitive data in prompts).
 
 ## Triage decision tree
 ```mermaid

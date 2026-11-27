@@ -28,13 +28,13 @@
 - `PB-IDN-011` [Conditional Access Policy Weakened](identity/conditional-access-weakened.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
 - `PB-IDN-012` [Kerberoasting](identity/kerberoasting.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
 - `PB-IDN-013` [DCSync / NTDS.dit Theft (Domain Compromise)](identity/domain-replication-dcsync.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square)
-- `PB-IDN-014` [AD CS Certificate Abuse (ESC1 / ESC8)](identity/adcs-certificate-abuse.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square) 🔎 *hunt*
+- `PB-IDN-014` [AD CS Certificate Abuse (ESC1 / ESC8)](identity/adcs-certificate-abuse.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square) 🔎 *rule + hunt*
 - `PB-IDN-015` [NTLM Relay and Authentication Coercion](identity/ntlm-relay-coercion.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square)
 - `PB-IDN-016` [Pass-the-Hash / Pass-the-Ticket](identity/pass-the-hash-ticket.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
-- `PB-IDN-017` [AS-REP Roasting and Kerberos Delegation Abuse](identity/asrep-roasting-delegation-abuse.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *hunt*
+- `PB-IDN-017` [AS-REP Roasting and Kerberos Delegation Abuse](identity/asrep-roasting-delegation-abuse.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *rule + hunt*
 - `PB-IDN-018` [AD Persistence (ACL, AdminSDHolder, GPO, SIDHistory)](identity/ad-persistence-acl-gpo-sidhistory.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square)
 - `PB-IDN-019` [Hybrid Identity Server Compromise (Entra Connect / AD FS)](identity/hybrid-identity-server-compromise.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square)
-- `PB-IDN-020` [Device Code Phishing](identity/device-code-phishing.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *hunt*
+- `PB-IDN-020` [Device Code Phishing](identity/device-code-phishing.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *rule + hunt*
 - `PB-IDN-021` [Helpdesk Social Engineering / MFA Reset Abuse](identity/helpdesk-social-engineering.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
 - `PB-IDN-022` [Guest and Cross-Tenant Access Abuse](identity/guest-cross-tenant-abuse.md) ![MEDIUM](https://img.shields.io/badge/-MEDIUM-b7791f?style=flat-square)
 
@@ -54,7 +54,7 @@
 - `PB-SAS-003` [Data Upload to GenAI or Unsanctioned Cloud Apps](saas/genai-unsanctioned-app-upload.md) ![MEDIUM](https://img.shields.io/badge/-MEDIUM-b7791f?style=flat-square)
 - `PB-SAS-004` [eDiscovery / Content Search Abuse](saas/ediscovery-content-search-abuse.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
 - `PB-SAS-005` [SaaS Connected-App Data Theft (Salesforce and Similar)](saas/saas-connected-app-data-theft.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
-- `PB-SAS-006` [Source Code Exfiltration and Secret Exposure](saas/source-code-secret-exposure.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *hunt*
+- `PB-SAS-006` [Source Code Exfiltration and Secret Exposure](saas/source-code-secret-exposure.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *rule + hunt*
 
 ### 💻 Endpoint
 
@@ -74,8 +74,8 @@
 - `PB-END-014` [Active Directory Reconnaissance (BloodHound / LDAP)](endpoint/ad-reconnaissance.md) ![MEDIUM](https://img.shields.io/badge/-MEDIUM-b7791f?style=flat-square)
 - `PB-END-015` [Infostealer Infection (Browser Credential and Session Theft)](endpoint/infostealer-infection.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
 - `PB-END-016` [LOLBin / Signed Binary Proxy Execution](endpoint/lolbin-proxy-execution.md) ![MEDIUM](https://img.shields.io/badge/-MEDIUM-b7791f?style=flat-square)
-- `PB-END-017` [Local Privilege Escalation (UAC Bypass, Potato, Service Abuse)](endpoint/local-privilege-escalation.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *hunt*
-- `PB-END-018` [ESXi / Hypervisor Ransomware](endpoint/esxi-hypervisor-ransomware.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square) 🔎 *hunt*
+- `PB-END-017` [Local Privilege Escalation (UAC Bypass, Potato, Service Abuse)](endpoint/local-privilege-escalation.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *rule + hunt*
+- `PB-END-018` [ESXi / Hypervisor Ransomware](endpoint/esxi-hypervisor-ransomware.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square) 🔎 *rule + hunt*
 - `PB-END-019` [Backup Infrastructure Attack](endpoint/backup-infrastructure-attack.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square)
 - `PB-END-020` [Kubernetes / Container Compromise](endpoint/kubernetes-container-compromise.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
 - `PB-END-021` [Linux Privilege Escalation and Stealth Persistence](endpoint/linux-privesc-persistence.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
@@ -100,9 +100,9 @@
 
 ### 🤖 AI & agents
 
-- `PB-AIS-001` [LLMjacking - Stolen Credentials Used to Run AI Models](ai/llmjacking-ai-resource-abuse.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *hunt*
-- `PB-AIS-002` [Prompt Injection / AI Assistant Data Exfiltration](ai/prompt-injection-ai-data-exfiltration.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *hunt*
-- `PB-AIS-003` [AI Agent / Non-Human Identity Abuse](ai/ai-agent-identity-abuse.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *hunt*
+- `PB-AIS-001` [LLMjacking - Stolen Credentials Used to Run AI Models](ai/llmjacking-ai-resource-abuse.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *rule + hunt*
+- `PB-AIS-002` [Prompt Injection / AI Assistant Data Exfiltration](ai/prompt-injection-ai-data-exfiltration.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *rule + hunt*
+- `PB-AIS-003` [AI Agent / Non-Human Identity Abuse](ai/ai-agent-identity-abuse.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *rule + hunt*
 - `PB-AIS-004` [Deepfake / AI-Enabled Social Engineering and Payment Fraud](ai/deepfake-social-engineering-fraud.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
 - `PB-AIS-005` [Malicious Package, Model or Dev Tool (Software Supply Chain)](ai/malicious-package-model-supply-chain.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
 
@@ -115,7 +115,7 @@
 - `PB-NET-005` [Edge Device Exploitation (VPN, Firewall, Load Balancer)](network/edge-device-exploitation.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square)
 - `PB-NET-006` [Internal Port Scan / Host Sweep](network/internal-scanning.md) ![MEDIUM](https://img.shields.io/badge/-MEDIUM-b7791f?style=flat-square)
 - `PB-NET-007` [C2 Beaconing / Threat-Intel Match](network/beaconing-c2.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
-- `PB-NET-008` [Log Source Silence / Ingestion Gap](network/log-source-silence.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *hunt*
+- `PB-NET-008` [Log Source Silence / Ingestion Gap](network/log-source-silence.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square) 🔎 *rule + hunt*
 - `PB-NET-009` [Mass Exploitation of a New Vulnerability (KEV Response)](network/mass-exploitation-response.md) ![CRITICAL](https://img.shields.io/badge/-CRITICAL-b42318?style=flat-square)
 - `PB-NET-010` [Malicious Download, Malvertising and ClickFix Lures](network/malicious-download-seo-poisoning.md) ![HIGH](https://img.shields.io/badge/-HIGH-d9480f?style=flat-square)
 

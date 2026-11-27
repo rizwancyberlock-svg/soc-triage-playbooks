@@ -20,7 +20,7 @@ related_kql: linux-reverse-shell, linux-download-and-execute, crypto-miner
 - `lnx_history_tampering` (SecOps): Shell history cleared or disabled (history -c, unset HISTFILE, HISTSIZE=0, linking history to /dev/null)
 - `linux-reverse-shell` (Sentinel): Reverse shell one-liners on Linux endpoints/servers (bash /dev/tcp, nc -e, socat exec, python/perl/php socket shells, mkfifo pipes) from Defender for Endpoint on Linux
 - `linux-download-and-execute` (Sentinel): curl/wget piped straight into a shell, or a binary executed from /tmp, /dev/shm or /var/tmp
-- `crypto-miner` (Sentinel): Process names or command-line arguments typical of crypto miners (xmrig, stratum+tcp, --donate- level, mining pool hosts), on Windows or Linux
+- `crypto-miner` (Sentinel): Process names or command-line arguments typical of crypto miners (xmrig, stratum+tcp, --donate-level, mining pool hosts), on Windows or Linux
 
 ## Triage decision tree
 ```mermaid

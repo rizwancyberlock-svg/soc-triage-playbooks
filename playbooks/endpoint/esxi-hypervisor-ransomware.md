@@ -3,7 +3,9 @@ id: PB-END-018
 title: ESXi / Hypervisor Ransomware
 severity: CRITICAL
 mitre: T1486, T1529, T1021.004, T1562.001
-trigger: hunt
+related_rules: esxi_ssh_or_shell_enabled, esxi_mass_vm_power_off
+related_kql: esxi-ssh-or-shell-enabled, esxi-mass-vm-power-off-from-shell
+trigger: rule+hunt
 ---
 
 # ESXi / Hypervisor Ransomware
@@ -11,7 +13,12 @@ trigger: hunt
 > Encrypting the hypervisor encrypts **every VM on it at once**, and ESXi has no EDR. Major ransomware families ship ESXi lockers. The common path is: vCenter or AD access → SSH enabled on hosts → VMs powered off → `.vmdk` files encrypted. If you only monitor Windows, **you will see this when the business calls**.
 
 ## When this fires
-**Hunt-driven**, and it should become a scheduled analytic. It needs ESXi syslog (hostd, shell, auth) and vCenter events forwarded to the SIEM.
+- `esxi_ssh_or_shell_enabled` (SecOps): VMware ESXi reported SSH or ESXi Shell enabled, or lockdown mode disabled - the first step of hypervisor ransomware before VMs are powered off and datastores encrypted
+- `esxi_mass_vm_power_off` (SecOps): Five or more VM power-off / kill commands from the ESXi shell on one host within 30 minutes (vim-cmd vmsvc/power.off, esxcli vm process kill) - the step immediately before VMDK encryption
+- `esxi-ssh-or-shell-enabled` (Sentinel): An ESXi host reported that SSH or the ESXi Shell was enabled, or lockdown mode was disabled
+- `esxi-mass-vm-power-off-from-shell` (Sentinel): Five or more VM power-off / kill commands (vim-cmd vmsvc/power.off, esxcli vm process kill) on one host inside 30 minutes, or execInstalledOnly being disabled so unsigned binaries can run
+
+**Also hunt** with the query below for the full sequence. All of it needs ESXi syslog (hostd, vobd, shell, auth) and vCenter events forwarded to the SIEM (see the VMware ESXi guide in siem-onboarding-kit).
 
 ## Triage decision tree
 ```mermaid

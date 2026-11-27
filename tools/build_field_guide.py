@@ -283,8 +283,8 @@ def build(version: str) -> str:
             area_anchor = f' id="area-{key}"' if first else ""
             first = False
             tags = "".join(f'<span class="tech">{html.escape(t.strip())}</span>' for t in m.get("mitre", "").split(","))
-            if m.get("trigger") == "hunt":
-                tags += '<span class="tech hunt">HUNT-DRIVEN</span>'
+            if m.get("trigger") in ("hunt", "rule+hunt"):
+                tags += '<span class="tech hunt">' + ("HUNT-DRIVEN" if m["trigger"] == "hunt" else "RULE + HUNT") + '</span>'
             parts.append(f"""
 <section class="page playbook"{area_anchor}>
   <div class="pb-head" id="{anchors[p]}">

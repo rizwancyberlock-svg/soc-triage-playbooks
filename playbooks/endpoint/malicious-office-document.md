@@ -13,11 +13,11 @@ related_kql: office-spawns-shell, lolbin-outbound-connection
 
 ## When this fires
 - `win_office_spawns_shell` (SecOps): A Microsoft Office application spawned a shell, script host or LOLBin
-- `win_lolbin_remote_payload` (SecOps): Signed Windows binaries abused to fetch or execute remote payloads: regsvr32 scriptlet (Squiblydoo), mshta/rundll32 with URLs or javascript:, certutil -urlcache, and…
+- `win_lolbin_remote_payload` (SecOps): Signed Windows binaries abused to fetch or execute remote payloads: regsvr32 scriptlet (Squiblydoo), mshta/rundll32 with URLs or javascript:, certutil -urlcache, and bitsadmin /transfer
 - `win_execution_from_suspicious_folder` (SecOps): An executable launched from a folder legitimate software almost never runs from (Recycle Bin, Users\\Public, PerfLogs, Windows\\Fonts, Windows\\Debug, Windows\\Tasks)
 - `umb_phishing_blocked` (SecOps): Umbrella blocked phishing domains - a user clicked a phishing link
 - `office-spawns-shell` (Sentinel): Word, Excel, PowerPoint or Outlook launched cmd, PowerShell, a script host or a LOLBin
-- `lolbin-outbound-connection` (Sentinel): mshta, rundll32, regsvr32, certutil, bitsadmin, msbuild or installutil connecting to a public IP
+- `lolbin-outbound-connection` (Sentinel): mshta, rundll32, regsvr32, certutil, bitsadmin, msbuild or installutil connecting to a public IP. These binaries rarely need the internet, and attackers use them to fetch payloads while looking like Windows
 
 ## Triage decision tree
 ```mermaid

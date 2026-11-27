@@ -3,7 +3,9 @@ id: PB-END-017
 title: Local Privilege Escalation (UAC Bypass, Potato, Service Abuse)
 severity: HIGH
 mitre: T1548.002, T1134.001, T1068, T1574.010
-trigger: hunt
+related_rules: win_uac_bypass_or_service_elevation
+related_kql: uac-bypass-or-service-account-elevation
+trigger: rule+hunt
 ---
 
 # Local Privilege Escalation (UAC Bypass, Potato, Service Abuse)
@@ -11,7 +13,10 @@ trigger: hunt
 > Between initial access and credential theft, there is almost always a step from user or service account to **SYSTEM / high integrity**: a UAC bypass (`fodhelper`, `computerdefaults`), a "Potato" token abuse from a service account (IIS, SQL), a writable service binary, or a kernel exploit. Catch it here and the attacker never reaches LSASS.
 
 ## When this fires
-**Hunt-driven.** Run daily on servers and weekly on workstations. EDR products alert on many of these individually. This playbook covers deciding on and scoping them.
+- `win_uac_bypass_or_service_elevation` (SecOps): A shell or LOLBin launched by an auto-elevating Windows binary (fodhelper, computerdefaults, eventvwr, sdclt, wsreset, slui), or a SYSTEM shell spawned from an IIS / SQL service identity - UAC bypass or Potato-style token impersonation
+- `uac-bypass-or-service-account-elevation` (Sentinel): A shell or LOLBin started with High or System integrity from an auto-elevating Windows binary (fodhelper, computerdefaults, eventvwr, sdclt, wsreset, slui), or from a service identity such as IIS APPPOOL or MSSQL. These are the classic UAC-bypass and 'Potato' token-impersonation paths between initial access and credential theft
+
+**Also hunt** daily on servers and weekly on workstations with the queries below. EDR products alert on many techniques individually; this playbook covers deciding on and scoping them.
 
 ## Triage decision tree
 ```mermaid

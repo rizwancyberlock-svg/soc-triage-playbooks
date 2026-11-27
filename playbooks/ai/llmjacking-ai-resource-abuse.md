@@ -3,7 +3,9 @@ id: PB-AIS-001
 title: LLMjacking - Stolen Credentials Used to Run AI Models
 severity: HIGH
 mitre: T1496.004, T1078.004, T1526
-trigger: hunt
+related_rules: aws_bedrock_model_access_or_logging_probe, azure_ai_service_keys_or_deployment
+related_kql: aws-bedrock-model-access-or-llmjacking, azure-openai-keys-or-deployment-new-caller
+trigger: rule+hunt
 ---
 
 # LLMjacking: Stolen Credentials Used to Run AI Models
@@ -11,7 +13,12 @@ trigger: hunt
 > Attackers use stolen cloud keys (from leaked repositories, infostealer logs or exposed `.env` files) to **switch on and resell access to paid AI models** such as Amazon Bedrock and Azure OpenAI. The victim pays: bills of tens of thousands of dollars per day are reported. The first API calls are recon, checking which models are enabled, which gives you a window to catch it early.
 
 ## When this fires
-**Hunt-driven**: schedule it daily. Signals: model-availability and model-access APIs called by identities that never use AI services, model access being *enabled* (EULA or use-case submissions), invocation-logging checks (attackers check whether you log prompts), and Cognitive Services keys being listed.
+- `aws_bedrock_model_access_or_logging_probe` (SecOps): Amazon Bedrock model access enabled (PutUseCaseForModelAccess, CreateFoundationModelAgreement, PutFoundationModelEntitlement) or invocation logging probed / deleted - the LLMjacking playbook for reselling paid model access with stolen keys
+- `azure_ai_service_keys_or_deployment` (SecOps): Azure AI services (Azure OpenAI / AI Foundry) keys listed or regenerated, or a model deployment created
+- `aws-bedrock-model-access-or-llmjacking` (Sentinel): Bedrock model-access enablement (PutUseCaseForModelAccess, CreateFoundationModelAgreement, PutFoundationModelEntitlement), or GetModelInvocationLoggingConfiguration, the call attackers use to check whether prompts are logged before they resell access
+- `azure-openai-keys-or-deployment-new-caller` (Sentinel): listKeys / regenerateKey or deployments/write on Microsoft.CognitiveServices (Azure OpenAI / AI Foundry) by a caller that has not performed these operations in the last 14 days
+
+**Also hunt** daily for invocation volume by identity and region. Signals: model-availability and model-access APIs called by identities that never use AI services, invocation-logging checks, and Cognitive Services keys being listed.
 
 ## Triage decision tree
 ```mermaid

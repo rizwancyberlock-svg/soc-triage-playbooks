@@ -3,7 +3,9 @@ id: PB-IDN-017
 title: AS-REP Roasting and Kerberos Delegation Abuse
 severity: HIGH
 mitre: T1558.004, T1134.001, T1098
-trigger: hunt
+related_rules: win_asrep_roasting_no_preauth, win_kerberos_delegation_modified
+related_kql: asrep-roasting-no-preauth, kerberos-delegation-attribute-modified
+trigger: rule+hunt
 ---
 
 # AS-REP Roasting and Kerberos Delegation Abuse
@@ -11,12 +13,17 @@ trigger: hunt
 > Accounts with **"Do not require Kerberos pre-authentication"** hand out crackable AS-REPs to anyone who asks. **Resource-based constrained delegation (RBCD)** written onto a computer object lets an attacker impersonate any user to that machine. Both are quiet, built-in features, so they are found by hunting.
 
 ## When this fires
-**Hunt-driven.** Run weekly. It needs 4768 on DCs, and *Audit Directory Service Changes* (5136) for the delegation hunt.
+- `win_asrep_roasting_no_preauth` (SecOps): Three or more Kerberos TGTs issued without pre-authentication (4768, PreAuthType 0) to one client within an hour - AS-REP roasting with Rubeus asreproast or impacket GetNPUsers
+- `win_kerberos_delegation_modified` (SecOps): Directory change (5136) to msDS-AllowedToActOnBehalfOfOtherIdentity (resource-based constrained delegation) or msDS-AllowedToDelegateTo - lets the writer impersonate any user to the target computer
+- `asrep-roasting-no-preauth` (Sentinel): Kerberos TGTs (4768) issued with PreAuthType 0, meaning the account does not require pre-authentication
+- `kerberos-delegation-attribute-modified` (Sentinel): Directory change (5136) to msDS-AllowedToActOnBehalfOfOtherIdentity (resource-based constrained delegation) or msDS-AllowedToDelegateTo
+
+**Also hunt** weekly with the queries below to inventory exposure (accounts without pre-auth, unconstrained delegation). Requires 4768 on DCs and *Audit Directory Service Changes* (5136).
 
 ## Triage decision tree
 ```mermaid
 flowchart TD
-  A[Hunt hit] --> B{AS-REP without pre-auth,<br/>or delegation attribute changed?}
+  A[Rule or hunt hit] --> B{AS-REP without pre-auth,<br/>or delegation attribute changed?}
   B -- AS-REP --> C{Account intentionally configured<br/>without pre-auth, documented?}
   C -- Yes --> D[Medium: rotate to a long password,<br/>plan to enable pre-auth]
   C -- No --> E[HIGH: roasting - reset password,<br/>enable pre-auth, find the requester]

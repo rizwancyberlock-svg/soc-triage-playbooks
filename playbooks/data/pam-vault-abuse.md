@@ -4,6 +4,7 @@ title: PAM Vault Abuse (CyberArk / ARCON)
 severity: HIGH
 mitre: T1555, T1078.003, T1098, T1562
 related_rules: cyberark_bulk_password_retrieval, cyberark_vault_login_failures, cyberark_builtin_admin_login, cyberark_safe_permission_change, cyberark_master_policy_change, cyberark_psm_recording_disabled, arcon_bulk_password_view, arcon_policy_or_role_change, pam_bypass_direct_admin_login
+related_kql: pam-vault-bulk-password-retrieval, pam-vault-policy-or-safe-permission-change
 ---
 
 # PAM Vault Abuse (CyberArk / ARCON)
@@ -20,6 +21,8 @@ related_rules: cyberark_bulk_password_retrieval, cyberark_vault_login_failures, 
 - `arcon_bulk_password_view` (SecOps): One user viewed / revealed passwords of 10+ privileged accounts within an hour
 - `arcon_policy_or_role_change` (SecOps): ARCON user/group/role/policy privilege change
 - `pam_bypass_direct_admin_login` (SecOps): Interactive / RDP login with an admin-named account (adm-, -adm, _admin) that did NOT come from a PAM jump host - PAM bypass
+- `pam-vault-bulk-password-retrieval` (Sentinel): One vault user retrieved 20 or more different privileged credentials within an hour (CyberArk 'Retrieve password' and equivalent PAM events received as CEF)
+- `pam-vault-policy-or-safe-permission-change` (Sentinel): Changes to the PAM vault's master policy, safe membership or permissions, or session recording settings (CyberArk and equivalent PAM events received as CEF)
 
 ## Triage decision tree
 ```mermaid

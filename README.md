@@ -53,7 +53,7 @@ python tools/build_field_guide.py --out field-guide/index.html --pdf field-guide
 | 🌐 **Network, edge & SOC ops** (10) | [DNS Tunneling, DGA and C2 Domains](playbooks/network/dns-tunneling-c2.md) · [Large Outbound Transfer / Exfiltration Tools](playbooks/network/data-exfiltration-volume.md) · [Web Application Attack (WAF)](playbooks/network/web-application-attack.md) · [VPN Brute Force / Credential Stuffing](playbooks/network/vpn-credential-attack.md) · [Edge Device Exploitation (VPN, Firewall, Load Balancer)](playbooks/network/edge-device-exploitation.md) · [Internal Port Scan / Host Sweep](playbooks/network/internal-scanning.md) · [C2 Beaconing / Threat-Intel Match](playbooks/network/beaconing-c2.md) · [Log Source Silence / Ingestion Gap 🔎](playbooks/network/log-source-silence.md) · [Mass Exploitation of a New Vulnerability (KEV Response)](playbooks/network/mass-exploitation-response.md) · [Malicious Download, Malvertising and ClickFix Lures](playbooks/network/malicious-download-seo-poisoning.md) |
 | 🗄️ **Data security** (5) | [Database Abuse (Guardium DAM)](playbooks/data/dam-database-abuse.md) · [DLP Incident / Insider Exfiltration](playbooks/data/dlp-exfiltration.md) · [PAM Vault Abuse (CyberArk / ARCON)](playbooks/data/pam-vault-abuse.md) · [HSM / Key Management Attack (Thales Luna, CipherTrust)](playbooks/data/hsm-key-custody.md) · [USB / Removable Media Exfiltration](playbooks/data/usb-removable-media-exfiltration.md) |
 
-🔎 = hunt-driven: no dedicated detection exists yet in the linked libraries, so the playbook ships validated hunting queries instead.
+Every playbook links detections in **both** libraries (Google SecOps and Microsoft Sentinel). 🔎 = **rule + hunt**: these scenarios also ship scheduled hunting queries, because the attack is quiet enough that rules alone are not enough.
 
 Contents page: **[playbooks/INDEX.md](playbooks/INDEX.md)** · ATT&CK mappings and linked rules for both SIEMs: **[playbooks/RULE-MAP.md](playbooks/RULE-MAP.md)**
 
@@ -83,7 +83,7 @@ Every push runs in CI:
 
 | Check | What it guarantees |
 |---|---|
-| `tools/check_playbooks.py` | Front matter, all required sections, Mermaid decision trees, unique IDs, no broken links, and every hunt-driven playbook ships a KQL hunt |
+| `tools/check_playbooks.py` | Front matter, all required sections, Mermaid decision trees, unique IDs, no broken links, **detections in both SIEM libraries for every playbook**, and a KQL hunt wherever the trigger includes hunting |
 | Cross-check against **open-yaral-detections** | Every `related_rules` entry is a real Google SecOps rule |
 | Cross-check against **sentinel-kql-detections** | Every `related_kql` entry is a real Sentinel rule |
 | `tools/export_kql.py` + Microsoft's KQL analyzer | **Every KQL query in every playbook compiles** against the Microsoft Sentinel table schemas |
@@ -110,8 +110,8 @@ Requires Python 3.10+, the .NET 8 SDK (for KQL validation) and Chrome / Chromium
 | Repo | Role |
 |---|---|
 | [siem-onboarding-kit](https://github.com/rizwancyberlock-svg/siem-onboarding-kit) | Onboard the log sources the playbooks pivot on |
-| [open-yaral-detections](https://github.com/rizwancyberlock-svg/open-yaral-detections) | Detect in Google SecOps: 298 YARA-L rules |
-| [sentinel-kql-detections](https://github.com/rizwancyberlock-svg/sentinel-kql-detections) | Detect in Microsoft Sentinel: 191 KQL rules |
+| [open-yaral-detections](https://github.com/rizwancyberlock-svg/open-yaral-detections) | Detect in Google SecOps: 312 YARA-L rules |
+| [sentinel-kql-detections](https://github.com/rizwancyberlock-svg/sentinel-kql-detections) | Detect in Microsoft Sentinel: 208 KQL rules |
 | **soc-triage-playbooks** (you are here) | Investigate & respond |
 | [rosetta-siem](https://github.com/rizwancyberlock-svg/rosetta-siem) | Translate between SIEM query languages |
 
