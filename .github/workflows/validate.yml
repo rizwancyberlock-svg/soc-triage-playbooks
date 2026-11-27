@@ -29,7 +29,7 @@ jobs:
             --index playbooks/INDEX.md \
             --rules-dir open-yaral-detections/rules \
             --kql-dir sentinel-kql-detections/detections
-          git diff --exit-code -- playbooks/INDEX.md || { echo "::error::playbooks/INDEX.md is stale - run tools/check_playbooks.py and commit"; exit 1; }
+          git diff --exit-code -- playbooks/INDEX.md playbooks/RULE-MAP.md || { echo "::error::playbooks/INDEX.md or RULE-MAP.md is stale - run tools/check_playbooks.py and commit"; exit 1; }
 
       - uses: actions/setup-dotnet@v4
         with:

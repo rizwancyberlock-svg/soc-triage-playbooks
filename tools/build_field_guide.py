@@ -195,7 +195,7 @@ def slug(s: str) -> str:
 def build(version: str) -> str:
     playbooks = []
     for p in sorted((ROOT / "playbooks").rglob("*.md")):
-        if p.name == "INDEX.md":
+        if p.name in ("INDEX.md", "RULE-MAP.md"):
             continue
         meta, body = front_matter(p.read_text(encoding="utf-8"))
         playbooks.append((p.resolve(), meta, body, p.parent.name))
