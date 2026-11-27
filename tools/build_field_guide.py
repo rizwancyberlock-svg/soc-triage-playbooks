@@ -386,7 +386,8 @@ ul, ol { margin: 3pt 0 6pt; padding-left: 16pt; } li { margin: 2pt 0; }
   .topbar b { margin-right: auto; } .topbar a { color: #8cc4ff; }
   @media (max-width: 820px) { section.page, section.divider, section.cover { margin: 12px 8px; padding: 18px 16px; }
     section.cover { margin-top: 64px; min-height: 0; padding: 40px 20px; } .cover .stats { flex-wrap: wrap; } .cover .stats div { min-width: 40%; }
-    table { display: block; overflow-x: auto; } .tree { overflow-x: auto; } .pb-head h2 { font-size: 22px; } .cover h1 { font-size: 40px; } .topbar a.hide-sm { display: none; } }
+    table { display: block; overflow-x: auto; } .tree { overflow-x: auto; text-align: left; } .tree svg { min-width: 520px; max-height: none; }
+    .pb-head h2 { font-size: 22px; } .topbar { gap: 12px; padding: 10px 12px; font-size: 13px; } .cover h1 { font-size: 40px; } .topbar a.hide-sm { display: none; } }
 }
 </style>
 <script src="{{MERMAID}}"></script>
